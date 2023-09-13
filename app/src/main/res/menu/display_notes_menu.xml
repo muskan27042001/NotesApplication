@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/a_to_z"
+        android:icon="@drawable/baseline_add_photo_alternate_24"
+        android:iconTint="@color/black"
+        android:title="A to Z" />
+    <item
+        android:id="@+id/z_to_a"
+        android:icon="@drawable/baseline_share_24"
+        android:iconTint="@color/black"
+        android:title="Zto A" />
+    <item
+        android:id="@+id/new_edit"
+        android:icon="@drawable/baseline_share_24"
+        android:iconTint="@color/black"
+        android:title="New Edited" />
+    <item
+        android:id="@+id/last_edit"
+        android:icon="@drawable/baseline_share_24"
+        android:iconTint="@color/black"
+        android:title="Last Edited" >
+
+    </item>
+
+
+</menu>

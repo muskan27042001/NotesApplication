@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_item1"
+        android:icon="@drawable/baseline_add_photo_alternate_24"
+        android:iconTint="@color/black"
+        android:title="Add Image" />
+    <item
+        android:id="@+id/share_note"
+        android:icon="@drawable/baseline_share_24"
+        android:iconTint="@color/black"
+        android:title="Send" />
+
+    <item
+        android:id="@+id/draw"
+        android:icon="@drawable/baseline_brush_24"
+        android:title="Draw"
+        android:iconTint="@color/black">
+
+    </item>
+</menu>

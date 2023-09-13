@@ -1,0 +1,39 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.NotesApplication" parent="Theme.MaterialComponents">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDarkMode</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccentDarkMode</item>
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="FloatingButton">
+        <item name="android:backgroundTint">@color/card_purple</item>
+    </style>
+    <style name="BackgroundColor">
+        <item name="android:background">#504E4E</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="IconColor">
+        <item name="android:color">@color/white</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="FloatingButtonTextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>
