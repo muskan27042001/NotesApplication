@@ -12,6 +12,7 @@ import com.example.notesapplication.R
 import com.example.notesapplication.databinding.NoteItemLayoutBinding
 import com.example.notesapplication.fragments.NoteFragmentDirections
 import com.example.notesapplication.model.Note
+import com.example.notesapplication.model.User
 import com.example.notesapplication.utils.hideKeyboard
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
@@ -23,7 +24,7 @@ import io.noties.markwon.ext.tasklist.TaskListPlugin
 import org.commonmark.node.SoftLineBreak
 
 
-class RvNotesAdapter:ListAdapter<Note,RvNotesAdapter.NotesViewHolder> (DiffUtilCallback()){
+class RvNotesAdapter(private val user: User):ListAdapter<Note,RvNotesAdapter.NotesViewHolder> (DiffUtilCallback()){
         inner class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val contentBinding = NoteItemLayoutBinding.bind(itemView)
         val title: MaterialTextView = contentBinding.noteItemTitle
@@ -60,7 +61,7 @@ class RvNotesAdapter:ListAdapter<Note,RvNotesAdapter.NotesViewHolder> (DiffUtilC
                 parent.setCardBackgroundColor(note.color)
 
                 itemView.setOnClickListener{
-                    val action = NoteFragmentDirections.actionNoteFragmentToSaveOrUpdateFragment()
+                    val action = NoteFragmentDirections.actionNoteFragmentToSaveOrUpdateFragment(user)
                         .setNote(note)
                     val extras= FragmentNavigatorExtras(parent to "recyclerView_${note.id}")
                     it.hideKeyboard()
@@ -68,7 +69,7 @@ class RvNotesAdapter:ListAdapter<Note,RvNotesAdapter.NotesViewHolder> (DiffUtilC
                 }
 
                 content.setOnClickListener{
-                    val action = NoteFragmentDirections.actionNoteFragmentToSaveOrUpdateFragment()
+                    val action = NoteFragmentDirections.actionNoteFragmentToSaveOrUpdateFragment(user)
                         .setNote(note)
                     val extras= FragmentNavigatorExtras(parent to "recyclerView_${note.id}")
                     it.hideKeyboard()

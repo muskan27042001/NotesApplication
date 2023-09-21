@@ -1,24 +1,23 @@
 package com.example.notesapplication.activities
 
 import android.Manifest
-import android.R
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.notesapplication.databinding.ActivityMainBinding
 import com.example.notesapplication.db.NoteDatabase
 import com.example.notesapplication.repository.NoteRepository
 import com.example.notesapplication.viewModel.NoteActivityViewModel
 import com.example.notesapplication.viewModel.NoteActivityViewModelFactory
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private var REQUEST_CODE_IMAGE = 789
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()  // Hide action bar
@@ -54,12 +54,33 @@ if(ContextCompat.checkSelfPermission(this@MainActivity,Manifest.permission.READ_
             noteActivityViewModel= ViewModelProvider(this,
                 noteActivityViewModelFactory)[NoteActivityViewModel::class.java]
 
+            NoteDatabase.invoke(this)
+
+
 
         }
         catch (e : Exception)
         {
-            Log.d("TAG",e.toString())
+            Log.d("EXE",e.toString())
         }
+
+/*
+// Initialize WorkManager
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+// Step 2: Schedule the Work (e.g., in your main application class)
+        val periodicWorkRequest = PeriodicWorkRequest.Builder<PermanentDeletionWorker>(
+            1, TimeUnit.DAYS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(periodicWorkRequest)
+*/
+
+
     }
 
     fun changeTheme() {

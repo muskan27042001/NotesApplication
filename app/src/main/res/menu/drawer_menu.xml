@@ -3,13 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-            android:id="@+id/nav_item_1"
-            android:title="Item 1" />
+            android:id="@+id/home_fragment"
+            android:icon="@drawable/ic_link"
+            app:showAsAction="always"
+            android:title="Notes" />
+
         <item
-            android:id="@+id/nav_theme"
-            android:title="Theme"
-            android:actionLayout="@layout/theme_switch"
-            />
+            android:id="@+id/deleted_notes"
+            android:icon="@drawable/ic_delete"
+            app:showAsAction="always"
+            android:title="Deleted Notes" />
+
+        <item
+            android:id="@+id/logout_acount"
+            android:icon="@drawable/baseline_logout_24"
+            app:showAsAction="always"
+            android:title="Logout" />
+
+        <item
+                android:id="@+id/delete_account"
+                android:icon="@drawable/ic_delete"
+                app:showAsAction="always"
+                android:title="Delete Account"/>
+
         <item
             android:id="@+id/nav_theme_toggle"
             android:actionLayout="@layout/theme_switch"

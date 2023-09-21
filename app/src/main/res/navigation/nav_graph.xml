@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/noteFragment">
+    app:startDestination="@id/loginSignupFragment">
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.example.notesapplication.fragments.NoteFragment"
@@ -11,7 +11,39 @@
         android:label="NoteFragment" >
         <action
             android:id="@+id/action_noteFragment_to_saveOrUpdateFragment"
-            app:destination="@id/saveOrUpdateFragment" />
+            app:destination="@id/saveOrUpdateFragment" >
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"
+                app:nullable="true" />
+        </action>
+        <action
+            android:id="@+id/action_noteFragment_to_deletedNoteFragment"
+            app:destination="@id/deletedNoteFragment" >
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"
+                app:nullable="true" />
+        </action>
+        <action
+            android:id="@+id/action_noteFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_noteFragment_to_loginSignupFragment"
+            app:destination="@id/loginSignupFragment" >
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"
+                app:nullable="true" />
+        </action>
+
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
+
     </fragment>
     <fragment
         android:id="@+id/saveOrUpdateFragment"
@@ -20,7 +52,11 @@
         android:label="SaveOrUpdateFragment" >
         <action
             android:id="@+id/action_saveOrUpdateFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
+            app:destination="@id/noteFragment" >
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"/>
+        </action>
 
         <argument
             android:name="Note"
@@ -28,5 +64,57 @@
             app:argType="com.example.notesapplication.model.Note"
             app:nullable="true">
         </argument>
+
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
+    </fragment>
+    <fragment
+        android:id="@+id/deletedNoteFragment"
+        android:name="com.example.notesapplication.fragments.DeletedNoteFragment"
+        android:label="DeletedNoteFragment" >
+        <action
+            android:id="@+id/action_deletedNoteFragment_to_noteFragment"
+            app:destination="@id/noteFragment"/>
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:argType="com.example.notesapplication.model.User"
+            app:nullable="true">
+        </argument>
+    </fragment>
+    <fragment
+        android:id="@+id/loginSignupFragment"
+        android:name="com.example.notesapplication.fragments.LoginSignupFragment"
+        android:label="fragment_login_signup"
+        tools:layout="@layout/fragment_login_signup" >
+        <action
+            android:id="@+id/action_loginSignupFragment_to_noteFragment"
+            app:destination="@id/noteFragment" >
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"/>
+        </action>
+        <action
+            android:id="@+id/action_loginSignupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.notesapplication.fragments.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+
+
     </fragment>
 </navigation>

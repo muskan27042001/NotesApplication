@@ -138,5 +138,7 @@ dependencies {
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    implementation("androidx.work:work-runtime:2.7.0")
+
 
 }

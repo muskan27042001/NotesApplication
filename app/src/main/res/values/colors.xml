@@ -7,6 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="lavender">#8692f7</color>
+
+    <color name="lightGrey">#F4F4F4</color>
+    <color name="teal">#00897B</color>
+    <color name="bluee">#2196F3</color>
+
 
     <color name="lightButtonColor">#FF000000</color>
     <color name="darkButtonColor">#FFFFFFFF</color>

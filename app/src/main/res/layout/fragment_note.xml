@@ -17,11 +17,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:liftOnScroll="true"
-            style="@style/BackgroundColor"
             android:layout_marginTop="15dp"
+            style="@style/BackgroundColor"
             android:id="@+id/app_bar_layout">
 
-            <Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|enterAlways">
@@ -33,83 +33,55 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:background="@drawable/rounded_search"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:orientation="horizontal"
-                        android:id="@+id/app_title_linear"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginEnd="15dp"
-                        tools:ignore="MissingConstraints">
+                        android:layout_marginEnd="15dp">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:id="@+id/nav_image"
+                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_image">
+                            android:src="@drawable/baseline_menu_24">
 
                         </ImageView>
 
-                        <com.google.android.material.textview.MaterialTextView
+                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:id="@+id/app_title"
-                            android:text="My Notes"
-                            android:textSize="30sp"
-                            style="@style/Text"
-                            android:layout_marginStart="90dp">
-
-                        </com.google.android.material.textview.MaterialTextView>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/app_title_linear"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@color/purple"
-                        android:orientation="horizontal"
-                        android:layout_marginEnd="15dp">
-
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
                             android:id="@+id/search"
-                            android:background="@drawable/rounded_search"
-                            android:drawableStart="@drawable/ic_round_search_24"
                             android:drawablePadding="5dp"
                             android:paddingTop="4dp"
-                            android:paddingStart="18dp"
+                            android:paddingStart="20dp"
                             android:paddingBottom="5dp"
                             android:paddingEnd="18dp"
+                            android:background="@null"
                             android:imeOptions="actionSearch"
                             android:hint="@string/search_here"
-                            android:textSize="16sp"
-                            android:inputType="textFilter"
+                            android:textSize="20dp"
+                            android:inputType="textFilter|textNoSuggestions"
                             android:importantForAutofill="no"
                             android:layout_weight="3">
 
                         </EditText>
 
                         <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:src="@drawable/baseline_more_vert_24"
                             android:id="@+id/menu_display_note"
+                            android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             app:tint="@color/black" />
 
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </Toolbar>
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -178,6 +150,7 @@
                 android:paddingStart="0dp"
                 android:textColor="@color/black"
                 android:paddingEnd="20dp"
+                android:visibility="gone"
                 android:text="@string/add_note"
                 android:layout_gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"></TextView>

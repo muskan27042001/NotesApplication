@@ -1,11 +1,7 @@
 package com.example.notesapplication.fragments
 
-import android.Manifest
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -20,10 +16,6 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
@@ -37,6 +29,7 @@ import com.example.notesapplication.activities.MainActivity
 import com.example.notesapplication.databinding.BottomSheetLayoutBinding
 import com.example.notesapplication.databinding.FragmentSaveOrUpdateBinding
 import com.example.notesapplication.model.Note
+import com.example.notesapplication.model.User
 import com.example.notesapplication.utils.hideKeyboard
 import com.example.notesapplication.viewModel.NoteActivityViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -58,13 +51,16 @@ class SaveOrUpdateFragment : Fragment(R.layout.fragment_save_or_update) {
     private lateinit var navController : NavController
     private lateinit var contentBinding : FragmentSaveOrUpdateBinding
     private var note : Note?=null
+    private var user : User?=null
     private var color = -1
     private lateinit var result : String
     private val noteActivityViewModel : NoteActivityViewModel by activityViewModels()
     private val currentDate = SimpleDateFormat.getInstance().format(Date())  /// it will return current date and time
     private val job = CoroutineScope(Dispatchers.Main)
     private val args : SaveOrUpdateFragmentArgs by navArgs()
+    private val userargs : SaveOrUpdateFragmentArgs by navArgs()
     private var selectedImagePath = ""
+    private var pinned : Int = 0
 
 private var REQUEST_CODE_IMAGE = 789
 
@@ -129,9 +125,8 @@ private var REQUEST_CODE_IMAGE = 789
     }
 
 
-
-
-    private fun saveNote() {
+    private fun saveNote(user: User) {
+        Log.d("save note",user.id.toString())
         if(contentBinding.etNoteContent.text.toString().isEmpty() || contentBinding.etTitle.text.toString().isEmpty())
         {
             Toast.makeText(activity,"Title is Empty. Please fill",Toast.LENGTH_SHORT).show()
@@ -141,19 +136,39 @@ private var REQUEST_CODE_IMAGE = 789
             note=args.note
             when(note)
             {
-                null-> {  // Fresh Note
-                    noteActivityViewModel.saveNote(Note(0, contentBinding.etTitle.text.toString(), contentBinding.etNoteContent.text.toString(), currentDate, color,selectedImagePath))
 
-                    // To update live data
-                    result="Note Saved"
-                    setFragmentResult(
-                        "key",
-                        bundleOf("bundleKey" to result)
-                    )
-                    navController.navigate(SaveOrUpdateFragmentDirections.actionSaveOrUpdateFragmentToNoteFragment())
+                null-> {  // Fresh Note
+                    Log.d("pin",pinned.toString())
+
+                    if (user != null) {
+                        // Use user.username, user.password, etc.
+                        Log.d("USER","")
+                        val id= user?.id
+                        Log.d("USER",id.toString())
+                        Log.d("idd", id.toString())
+                        id?.let {
+                            Note(0, contentBinding.etTitle.text.toString(), contentBinding.etNoteContent.text.toString(), currentDate, color,selectedImagePath,0,0,
+                                it
+                            )
+                        }?.let { noteActivityViewModel.saveNote(it) }
+
+                        // To update live data
+                        result="Note Saved"
+                        setFragmentResult(
+                            "key",
+                            bundleOf("bundleKey" to result)
+                        )
+                        navController.navigate(SaveOrUpdateFragmentDirections.actionSaveOrUpdateFragmentToNoteFragment(user))
+                    }
+                    else
+                    {
+                        Log.d("NULL save","")
+                    }
+
                 }
                 else-> {   // update note
-                    updateNote()
+
+                    updateNote(user)
                     navController.popBackStack()
                 }
             }
@@ -162,19 +177,43 @@ private var REQUEST_CODE_IMAGE = 789
         }
     }
 
-    private fun updateNote() {
-        if(note!=null)
-        {
-            noteActivityViewModel.updateNote(
+    private fun updateNote(user: User) {
+        //if(note!=null)
+       // {
+
+        if (user != null) {
+            // Use user.username, user.password, etc.
+            Log.d("USER","")
+            val id= user?.id
+            Log.d("USER",id.toString())
+            if(pinned==0)
+            {
+                Log.d("nooooo","")
+            }
+            if(pinned==1)
+            {
+                Log.d("yeesss","")
+            }
+            id?.let {
                 Note(
                     note!!.id,
                     contentBinding.etTitle.text.toString(),
                     contentBinding.etNoteContent.getMD(),
                     currentDate,
-                    color,selectedImagePath
+                    color,selectedImagePath,0, pinned, it
                 )
-            )
+            }?.let {
+                noteActivityViewModel.updateNote(
+                    it
+                )
+            }
         }
+        else
+        {
+            Log.d("NULL","")
+        }
+
+        //}
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -183,6 +222,19 @@ private var REQUEST_CODE_IMAGE = 789
         contentBinding=FragmentSaveOrUpdateBinding.bind(view)
         navController= Navigation.findNavController(view)
         val activity = activity as MainActivity
+
+        user = userargs.user
+        if (user != null) {
+            // Use user.username, user.password, etc.
+            Log.d("USER","")
+            val username= user?.username
+            Log.d("USER",username.toString())
+        }
+        else
+        {
+            Log.d("NULL create view","")
+        }
+
 
         ViewCompat.setTransitionName(
            contentBinding.noteContentFragmentParent,
@@ -201,6 +253,28 @@ private var REQUEST_CODE_IMAGE = 789
             showPopupMenu(it)
         }
 
+        // Pin note
+        contentBinding.pinNote.setOnClickListener {
+            Log.d("pin clicked","")
+            val notee=args.note
+            if (notee != null) {
+                pinned = if (pinned == 0) 1 else 0
+                if(pinned==0)
+                {
+                    contentBinding.pinNote.setBackgroundResource(R.drawable.baseline_favorite_border_24)
+                }
+                if(pinned==0)
+                {
+                    contentBinding.pinNote.setBackgroundResource(R.drawable.baseline_favorite_24)
+                }
+                Log.d("status",pinned.toString())
+                noteActivityViewModel.toggleNotePinnedStatus(notee)
+                Log.d("status",pinned.toString())
+            }
+
+        }
+
+
         // Add Image
         contentBinding.addImage.setOnClickListener {
             Log.d("ADD IMAGE","")
@@ -208,7 +282,7 @@ private var REQUEST_CODE_IMAGE = 789
         }
 
         // Share Note
-        contentBinding.shareNote.setOnClickListener{
+        contentBinding.sendNote.setOnClickListener{
             Log.d("SHARED CLICKED","")
             val notee=args.note
             val pdfFile = createPdfFromNote(notee,requireContext())
@@ -234,7 +308,7 @@ private var REQUEST_CODE_IMAGE = 789
 
         // On clicking "Save Note"
         contentBinding.saveNote.setOnClickListener {
-            saveNote()
+            user?.let { it1 -> saveNote(it1) }
         }
         try
         {
@@ -273,14 +347,15 @@ private var REQUEST_CODE_IMAGE = 789
                     setOnColorSelectedListener { value->
                             color=value
                             contentBinding.apply {
-                            noteContentFragmentParent.setBackgroundColor(color)
+                                noteContentFragmentParent.setBackgroundColor(color)
                                 mainLayout.setBackgroundColor(color)
                                 styleBar.setBackgroundColor(color)
-                            toolbarFragmentNoteContent.setBackgroundColor(color)
-                            bottomBar.setBackgroundColor(color)
+                                optionsLayout.setBackgroundColor(color)
+                                toolbarFragmentNoteContent.setBackgroundColor(color)
+                                bottomBar.setBackgroundColor(color)
                                 etTitle.setBackgroundColor(color)
                                 etNoteContent.setBackgroundColor(color)
-                            activity.window.statusBarColor=color
+                                //activity.window.statusBarColor=color
                         }
                         bottomSheetBinding.bottomSheetParent.setCardBackgroundColor(color)
                     }
@@ -351,22 +426,6 @@ private var REQUEST_CODE_IMAGE = 789
         }
     }
 
-  /*  private fun pickImageFromGallery() {
-        // Check if the permission is granted
-        Log.d("1","")
-        if (isReadPermissionGranted()) {
-            // Permission granted, proceed with picking image
-            Log.d("PICK IMG", "")
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivityForResult(intent, REQUEST_CODE_IMAGE)
-            }
-        } else {
-            // Permission not granted, request it
-            Log.d("2","")
-            requestPermission()
-        }
-    }*/
 
     private fun setUpNote() {
         val note=args.note
@@ -423,6 +482,18 @@ private var REQUEST_CODE_IMAGE = 789
         val page = document.startPage(pageInfo)
         val canvas = page.canvas
 
+// Calculate scaling factors
+        val pageWidth = pageInfo.pageWidth
+        val pageHeight = pageInfo.pageHeight
+        val backgroundImage = BitmapFactory.decodeResource(context.resources, R.drawable.floral_bg)
+        val scaleX = pageWidth.toFloat() / backgroundImage.width
+        val scaleY = pageHeight.toFloat() / backgroundImage.height
+
+        // Draw background image
+        val scaledBackgroundImage = Bitmap.createScaledBitmap(backgroundImage, pageWidth, pageHeight, true)
+        canvas.drawBitmap(scaledBackgroundImage, 0f, 0f, null)
+
+
         // Add text content to the PDF
         val paint = Paint()
         paint.textSize = 20f
@@ -444,6 +515,7 @@ private var REQUEST_CODE_IMAGE = 789
             val imageUri = Uri.parse(note.imgPath)
             val imageFile = File(imageUri.path) // Create a File object from the Uri path
             if (imageFile.exists()) {
+
                 val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)// Define a Matrix to scale the bitmap
                 val matrix = Matrix()
 
