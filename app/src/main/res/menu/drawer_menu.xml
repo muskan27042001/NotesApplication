@@ -2,35 +2,73 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-        <item
-            android:id="@+id/home_fragment"
-            android:icon="@drawable/ic_link"
-            app:showAsAction="always"
-            android:title="Notes" />
 
-        <item
-            android:id="@+id/deleted_notes"
-            android:icon="@drawable/ic_delete"
-            app:showAsAction="always"
-            android:title="Deleted Notes" />
+        <group
+            android:id="@+id/home_group">
+                <item
+                    android:id="@+id/home_fragment"
+                    android:icon="@drawable/ic_link"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Notes" />
+        </group>
 
-        <item
-            android:id="@+id/logout_acount"
-            android:icon="@drawable/baseline_logout_24"
-            app:showAsAction="always"
-            android:title="Logout" />
 
-        <item
-                android:id="@+id/delete_account"
-                android:icon="@drawable/ic_delete"
-                app:showAsAction="always"
-                android:title="Delete Account"/>
+        <group
+            android:id="@+id/deletednotes_group">
+                <item
+                    android:id="@+id/deleted_notes"
+                    android:icon="@drawable/ic_delete"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Deleted Notes" />
+        </group>
 
-        <item
-            android:id="@+id/nav_theme_toggle"
-            android:actionLayout="@layout/theme_switch"
-            app:showAsAction="always"
-            app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
-            android:title=" " />
+        <group
+            android:id="@+id/logout_group">
+                <item
+                    android:id="@+id/logout_acount"
+                    android:icon="@drawable/baseline_logout_24"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Logout" />
+        </group>
+
+        <group
+            android:id="@+id/labels_group">
+                <item
+                    android:id="@+id/labels"
+                    android:icon="@drawable/baseline_label_24"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Labels"/>
+        </group>
+
+        <group
+            android:id="@+id/deleteaccount_group">
+                <item
+                    android:id="@+id/delete_account"
+                    android:icon="@drawable/ic_delete"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Delete Account"/>
+        </group>
+
+
+        <group
+            android:id="@+id/theme_group">
+                <item
+                    android:id="@+id/nav_theme_toggle"
+                    android:actionLayout="@layout/theme_switch"
+                    app:showAsAction="always"
+                    app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
+                    android:title="                          Theme" />
+        </group>
+
         <!-- Add more items as needed -->
 </menu>

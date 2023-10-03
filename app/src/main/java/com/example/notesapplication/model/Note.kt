@@ -24,7 +24,9 @@ data class Note(
     var imgPath:String? = null,
     var deletedTimestamp: Long? = null,
     var isPinned: Int = 0,
-    val userId: Int // Foreign key to associate a note with a user
+    val userId: Int, // Foreign key to associate a note with a user
+    val bg: Int = 0,
+    var label: String? = null
 ) : Serializable
 
 @Entity(tableName = "users")
@@ -33,5 +35,6 @@ data class User(
     val id: Int = 0,
     val username: String,
     val password: String,
-    var isLoggedIn: Boolean
+    var isLoggedIn: Boolean,
+    var labels: List<String>
 ) : Serializable

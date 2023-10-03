@@ -34,8 +34,8 @@ interface DAO {
    // @Query("SELECT * FROM note WHERE deletedTimestamp IS NOT NULL AND deletedTimestamp > :timestamp")
    // fun getDeletedNotesSince(timestamp: Long): LiveData<List<Note>>
 
-    @Query("SELECT * FROM note WHERE deletedTimestamp > 0 ")
-    fun getDeletedNotesSince(): LiveData<List<Note>>
+    @Query("SELECT * FROM note WHERE userId = :userId AND deletedTimestamp > 0 ORDER BY isPinned DESC , id DESC")
+    fun getDeletedNotesSince(userId: Int): LiveData<List<Note>>
 
     @Query("DELETE FROM Note WHERE deletedTimestamp < :timestamp")
     fun permanentlyDeleteNotesOlderThan(timestamp: Long)
@@ -43,11 +43,17 @@ interface DAO {
     @Query("SELECT * FROM Note WHERE deletedTimestamp = 0 ORDER BY isPinned DESC , id DESC")
     fun getUndeletedNotes(): LiveData<List<Note>>
 
+    @Query("SELECT * FROM Note WHERE deletedTimestamp = 0 AND userId= :userId AND label= :labelname ORDER BY isPinned DESC , id DESC")
+    fun getNotesOfLabel(userId: Int,labelname : String): LiveData<List<Note>>
+
     @Update
     suspend fun updateNotePinnedStatus(note: Note)
 
-    @Query("SELECT * FROM Note WHERE userId = :userId")
+    @Query("SELECT * FROM Note WHERE userId = :userId AND deletedTimestamp = 0 ORDER BY isPinned DESC , id DESC")
     fun getNotesForUser(userId: Int): LiveData<List<Note>>
+
+    @Query("SELECT labels FROM users WHERE username = :username")
+    fun getLabelsForUser(username: String) : LiveData<List<String>>
 
     @Query("SELECT * FROM users WHERE id = :userId")
     fun getUserById(userId: Int): LiveData<User>
@@ -73,5 +79,11 @@ interface DAO {
     @Update
     fun updateLoggedInStatus(user: User)
 
+  //  @Query("SELECT u.labels FROM users u INNER JOIN Note n ON u.id = n.userId WHERE n.id = :noteId AND n.userId = :userId")
+  @Query("SELECT label FROM Note WHERE id = :noteId AND userId = :userId")
+    suspend fun getLabelOfNote(noteId: Int, userId: Int): String?
+
+    @Query("SELECT isPinned FROM Note where id=:noteId")
+    suspend fun pinnedornot(noteId: Int) : Boolean
 
 }

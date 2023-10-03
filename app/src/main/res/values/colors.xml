@@ -41,6 +41,7 @@
     <color name="colorPrimaryDarkMode">#1A237E</color>
     <color name="colorAccentDarkMode">#D81B60</color>
     <color name="colorPrimaryDark">#3F51B5</color>
+    <color name="wow_color">#D4C4E3</color>
 
 
     <array name="color_picker">

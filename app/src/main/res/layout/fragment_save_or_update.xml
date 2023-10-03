@@ -87,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/optionsLayout"
                     android:orientation="horizontal">
 
@@ -112,11 +113,12 @@
                         android:src="@drawable/ic_link" />
 
                     <ImageView
-                        android:id="@+id/reminder_note"
+                        android:id="@+id/label_note"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="30dp"
-                        android:src="@drawable/baseline_add_alert_24" />
+                        android:visibility="visible"
+                        android:src="@drawable/baseline_new_label_24" />
 
                     <ImageView
                         android:id="@+id/send_note"
@@ -148,6 +150,27 @@
                         android:hint="Note Title">
 
                     </EditText>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_label_24"
+                        android:id="@+id/label_img"
+                        android:background="@null"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        app:tint="@color/black" />
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="label"
+                        android:id="@+id/label_text"
+                        android:visibility="gone"
+                        android:paddingStart="5dp"
+                        android:textSize="20sp"
+                        />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -193,11 +216,11 @@
                         <ImageView
                             android:id="@+id/imgNote"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
+                            android:layout_height="250dp"
                             android:visibility="gone"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp" />
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp" />
 
                         <ImageView
                             android:id="@+id/imgDelete"
@@ -259,6 +282,7 @@
                 android:layout_gravity="bottom|right"
                 android:backgroundTint="@color/purple"
                 android:elevation="0dp"
+                app:borderWidth="0dp"
                 android:src="@drawable/ic_baseline_color_lens_24">
 
             </com.google.android.material.floatingactionbutton.FloatingActionButton>

@@ -7,7 +7,7 @@
         <solid
             android:color="@color/black"/>
 <size
-    android:height="8dp"/>
+    android:height="2dp"/>
         <corners
             android:radius="100dp"/>
 
@@ -21,7 +21,7 @@
             <solid
                 android:color="@color/purple"/>
             <size
-                android:height="8dp"/>
+                android:height="2dp"/>
             <corners
                 android:radius="100dp"/>
 

@@ -21,6 +21,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -51,6 +52,11 @@ class SaveOrUpdateFragment : Fragment(R.layout.fragment_save_or_update) {
     private lateinit var navController : NavController
     private lateinit var contentBinding : FragmentSaveOrUpdateBinding
     private var note : Note?=null
+    private var idOfUser : Int = -1
+    private var idOfNote : Int = -1
+    private var labelName : String = ""
+    private var pinnedornot : Boolean = false
+    private var bg = 0
     private var user : User?=null
     private var color = -1
     private lateinit var result : String
@@ -93,8 +99,10 @@ private var REQUEST_CODE_IMAGE = 789
                        Log.d("yay","")
                        var inputStream = requireActivity().contentResolver.openInputStream(selectedImageUrl)
                        var bitmap = BitmapFactory.decodeStream(inputStream)
-                       contentBinding.imgNote.setImageBitmap(bitmap)
+                       contentBinding.layoutImage.visibility = View.VISIBLE
                        contentBinding.imgNote.visibility = View.VISIBLE
+                       contentBinding.imgDelete.visibility = View.VISIBLE
+                       contentBinding.imgNote.setImageBitmap(bitmap)
 
 
                        selectedImagePath = getPathFromUri(selectedImageUrl)!!
@@ -142,13 +150,23 @@ private var REQUEST_CODE_IMAGE = 789
 
                     if (user != null) {
                         // Use user.username, user.password, etc.
+                        val sharedPreferences = context?.getSharedPreferences("Label", Context.MODE_PRIVATE)
+                        val labelName = sharedPreferences?.getString("labelname", null)
+                        if (labelName != null) {
+                            Log.d("label name save",labelName)
+                        }
+                        else
+                        {
+                            Log.d("label name save","null")
+                        }
+
                         Log.d("USER","")
                         val id= user?.id
                         Log.d("USER",id.toString())
                         Log.d("idd", id.toString())
                         id?.let {
                             Note(0, contentBinding.etTitle.text.toString(), contentBinding.etNoteContent.text.toString(), currentDate, color,selectedImagePath,0,0,
-                                it
+                                it,bg,labelName
                             )
                         }?.let { noteActivityViewModel.saveNote(it) }
 
@@ -182,6 +200,12 @@ private var REQUEST_CODE_IMAGE = 789
        // {
 
         if (user != null) {
+
+            val sharedPreferences = context?.getSharedPreferences("Label", Context.MODE_PRIVATE)
+            val labelName = sharedPreferences?.getString("labelname", null)
+            if (labelName != null) {
+                Log.d("label name save",labelName)
+            }
             // Use user.username, user.password, etc.
             Log.d("USER","")
             val id= user?.id
@@ -200,7 +224,7 @@ private var REQUEST_CODE_IMAGE = 789
                     contentBinding.etTitle.text.toString(),
                     contentBinding.etNoteContent.getMD(),
                     currentDate,
-                    color,selectedImagePath,0, pinned, it
+                    color,selectedImagePath,0, pinned, it,bg,labelName
                 )
             }?.let {
                 noteActivityViewModel.updateNote(
@@ -223,17 +247,75 @@ private var REQUEST_CODE_IMAGE = 789
         navController= Navigation.findNavController(view)
         val activity = activity as MainActivity
 
+    //    val sharedPreferences = context?.getSharedPreferences("Label", Context.MODE_PRIVATE)
+   //     val labelName = sharedPreferences?.getString("labelname", null)
+
+
+     //   contentBinding.labelText.setText(labelName)
+     //   contentBinding.labelText.visibility=View.VISIBLE
+     //   contentBinding.labelImg.visibility=View.VISIBLE
+
         user = userargs.user
         if (user != null) {
             // Use user.username, user.password, etc.
             Log.d("USER","")
             val username= user?.username
+             idOfUser= user!!.id
+            Log.d("IDOFUSER",idOfUser.toString())
             Log.d("USER",username.toString())
         }
         else
         {
             Log.d("NULL create view","")
         }
+
+        note = args.note
+        if (note != null) {
+            // Use user.username, user.password, etc.
+            Log.d("note","")
+            idOfNote= note!!.id
+            Log.d("IDOFNOTE",idOfNote.toString())
+            Log.d("note",note.toString())
+        }
+        else
+        {
+            Log.d("NULL create view","note")
+        }
+
+
+        lifecycleScope.launch {
+            Log.d("DEBUG", "idOfUser: $idOfUser, idOfNote: $idOfNote")
+            val label = noteActivityViewModel.getLabelOfNote(idOfNote,idOfUser)
+            labelName = label ?: "Label not found"
+            Log.d("LABELNAME", labelName)
+            if(labelName!=null)
+            {
+Log.d("null ni h ","")
+                contentBinding.labelText.visibility=View.VISIBLE
+                contentBinding.labelText.setText(labelName)
+                contentBinding.labelImg.visibility=View.VISIBLE
+            }
+
+            if(note!=null)
+            {
+                pinnedornot=noteActivityViewModel.pinnedornot(idOfNote)
+                Log.d("pinned h ya ni ",pinnedornot.toString())
+                if(pinnedornot==false)
+                {
+                    Log.d("pinned ni h ","")
+                    contentBinding.pinNote.setBackgroundResource(R.drawable.baseline_favorite_border_24)
+                }
+                else
+                {
+                    Log.d("pinned hai","")
+                    contentBinding.pinNote.setBackgroundResource(R.drawable.baseline_favorite_24)
+                }
+            }
+
+        }
+
+
+
 
 
         ViewCompat.setTransitionName(
@@ -246,6 +328,21 @@ private var REQUEST_CODE_IMAGE = 789
             selectedImagePath = ""
             contentBinding.layoutImage.visibility = View.GONE
 
+        }
+
+        // Add Label
+        contentBinding.labelNote.setOnClickListener {
+
+            contentBinding.labelImg.visibility=View.VISIBLE
+            contentBinding.labelText.visibility=View.VISIBLE
+            val user = userargs.user as? User
+            if (user != null) {
+                Log.d("add label user before",note.toString())
+                navController.navigate(SaveOrUpdateFragmentDirections.actionSaveOrUpdateFragmentToAddLabelFragment(user))
+            } else {
+                // Handle the case where user is null, maybe show an error message
+                Log.d("hhhhaawww","")
+            }
         }
 
         // Menu Open
@@ -263,7 +360,7 @@ private var REQUEST_CODE_IMAGE = 789
                 {
                     contentBinding.pinNote.setBackgroundResource(R.drawable.baseline_favorite_border_24)
                 }
-                if(pinned==0)
+                if(pinned==1)
                 {
                     contentBinding.pinNote.setBackgroundResource(R.drawable.baseline_favorite_24)
                 }
@@ -364,6 +461,7 @@ private var REQUEST_CODE_IMAGE = 789
                 // background picker
                 bottomSheetBinding.loveBgImg.setOnClickListener {
                     contentBinding.mainLayout.setBackgroundResource(R.drawable.love_bg)
+                    bg=1
                 }
                 bottomSheetParent.setCardBackgroundColor(color)
             }
@@ -442,6 +540,7 @@ private var REQUEST_CODE_IMAGE = 789
             title.setText(note.title)
             content.renderMD(note.content)
             color=note.color
+            bg=note.bg
 
             if (note.imgPath != ""){
                 selectedImagePath = note.imgPath!!
@@ -462,6 +561,10 @@ private var REQUEST_CODE_IMAGE = 789
                 job.launch {
                     delay(10)
                     noteContentFragmentParent.setBackgroundColor(color)
+                    if(bg==1)
+                    {
+                        noteContentFragmentParent.setBackgroundResource(R.drawable.love_bg)
+                    }
                 }
                 toolbarFragmentNoteContent.setBackgroundColor(color)
                 bottomBar.setBackgroundColor(color)

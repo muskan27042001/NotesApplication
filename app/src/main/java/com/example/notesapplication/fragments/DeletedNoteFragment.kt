@@ -2,6 +2,7 @@ package com.example.notesapplication.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,39 +47,48 @@ class DeletedNoteFragment : Fragment(R.layout.fragment_deleted_note) {
 
         deletedNoteBinding = FragmentDeletedNoteBinding.bind(view)
 
-        recyclerViewDisplay()
         user=userargs.user
+        user?.let { recyclerViewDisplay(it) }
 
     }
 
-    private fun recyclerViewDisplay() {
+    private fun recyclerViewDisplay(user:User) {
         when(resources.configuration.orientation)
         {
-            Configuration.ORIENTATION_PORTRAIT->setUpRecyclerView(2) // 2 columns in potrait mode
-            Configuration.ORIENTATION_LANDSCAPE->setUpRecyclerView(3) // 3 columns in ladscape mode
+            Configuration.ORIENTATION_PORTRAIT->setUpRecyclerView(2,user) // 2 columns in potrait mode
+            Configuration.ORIENTATION_LANDSCAPE->setUpRecyclerView(3,user) // 3 columns in ladscape mode
         }
     }
 
-    private fun setUpRecyclerView(spanCount: Int) {
+    private fun setUpRecyclerView(spanCount: Int,user:User) {
         deletedNoteBinding.rvNote.apply {
             layoutManager= StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
             setHasFixedSize(true)
-            rvAdapter= user?.let { RvNotesAdapter(it) }!!
-            rvAdapter.stateRestorationPolicy= RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter=rvAdapter
-            postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+
+            if(user!=null){
+                rvAdapter= user?.let { RvNotesAdapter(it) }!!
+                rvAdapter.stateRestorationPolicy= RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                adapter=rvAdapter
+                postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+                viewTreeObserver.addOnPreDrawListener {
+                    startPostponedEnterTransition()
+                    true
+                }
             }
+            if(user==null)
+            {
+                Log.d("NULLLL","")
+            }
+
         }
-        observerDataChanges()
+        observerDataChanges(user)
     }
 
-    private fun observerDataChanges() {
+    private fun observerDataChanges(user:User) {
             // Retrieve deleted notes since 7 days ago
            // val sevenDaysAgo = System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000
-            noteActivityViewModel.getDeletedNotesSince().observe(viewLifecycleOwner) { deletedNotes ->
+
+            noteActivityViewModel.getDeletedNotesSince(user.id).observe(viewLifecycleOwner) { deletedNotes ->
                 if(deletedNotes.isNotEmpty())
                 {
                     for (deletedNote in deletedNotes) {
@@ -103,7 +113,7 @@ class DeletedNoteFragment : Fragment(R.layout.fragment_deleted_note) {
 
     fun isSevenDaysOld(timestamp: Long): Boolean {
         val currentTimestamp = System.currentTimeMillis()
-        val sevenDaysAgoTimestamp = currentTimestamp - (60*1000)
+        val sevenDaysAgoTimestamp = currentTimestamp - (7 * 24 * 60 * 60 * 1000)
         return timestamp <= sevenDaysAgoTimestamp
     }
 

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupMenu
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
@@ -58,6 +59,7 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
     private lateinit var nav_view : NavigationView
     private var user: User? = null
     private val args: NoteFragmentArgs by navArgs()
+    private var backPressedTime: Long = 0
 
 
 
@@ -70,9 +72,9 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
         }
 
         // Transition on entering this fragment
-        enterTransition= MaterialElevationScale(true).apply {
-            duration=350
-        }
+      /*  enterTransition= MaterialElevationScale(true).apply {
+            duration=100
+        }*/
 
     }
 
@@ -83,6 +85,20 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
         val navController = Navigation.findNavController(view) // For moving from one fragment to other fragment
         requireView().hideKeyboard()
 
+        ////////////////////////////////////
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressedTime + 1000 > System.currentTimeMillis()) {
+                    activity?.finishAffinity()
+                } else {
+                    // Show a toast or perform any other action you want
+                }
+                backPressedTime = System.currentTimeMillis()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        ///////////////////////////////////
      //   user = arguments?.getParcelable("User")
 
         user = args.user
@@ -147,19 +163,33 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
                     Log.d("CLICKED","itemi 1")
                     navController.navigate(NoteFragmentDirections.actionNoteFragmentToDeletedNoteFragment(user))
                 }
+                R.id.labels->{
+                    Log.d("CLICKED","label fragment")
+                    navController.navigate(NoteFragmentDirections.actionNoteFragmentToLabelFragment(user))
+                }
                 R.id.logout_acount -> {
                     lifecycleScope.launch {
                         Log.d("user logout 1",user.toString())
                         user?.let {
                             withContext(Dispatchers.IO) {
+                                Log.d("ho gya logout","")
                                 noteActivityViewModel.setLoggedIn(it)
                             }
                         }
                         Log.d("user logout 2",user.toString())
+                        val sharedPreferences = context?.getSharedPreferences("LOGGEDINUSERNAME", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences?.edit()
+                        if (editor != null) {
+                            editor.putString("username", null)
+                            editor.apply()
+                        }
                     }
                     noteActivityViewModel.clearUserData()
                     Log.d("user logout 3",user.toString())
+
                     navController.navigate(NoteFragmentDirections.actionNoteFragmentToLoginSignupFragment(user))
+
+
                 }
                 R.id.delete_account -> {
                     AlertDialog.Builder(requireContext())
@@ -397,36 +427,36 @@ val theme_switch = nav_view.menu.findItem(R.id.nav_theme_toggle).actionView as S
         }
     }
 
-    private fun observerDataChangesAtoZ() {
+    private fun observerDataChangesAtoZ(user: User) {
         //val sortedNoteList = noteList.sortedBy { it.title }
-        noteActivityViewModel.getAllNotes().observe(viewLifecycleOwner){list->
+        noteActivityViewModel.getNotesForUser(userId = user.id).observe(viewLifecycleOwner){list->
             noteBinding.noData.isVisible=list.isEmpty()
             val sortedNoteList = list.sortedBy { it.title }
             rvAdapter.submitList(sortedNoteList)
         }
     }
 
-    private fun observerDataChangesZtoA() {
+    private fun observerDataChangesZtoA(user: User) {
         //val sortedNoteList = noteList.sortedBy { it.title }
-        noteActivityViewModel.getAllNotes().observe(viewLifecycleOwner){list->
+        noteActivityViewModel.getNotesForUser(userId = user.id).observe(viewLifecycleOwner){list->
             noteBinding.noData.isVisible=list.isEmpty()
             val sortedNoteList = list.sortedByDescending { it.title }
             rvAdapter.submitList(sortedNoteList)
         }
     }
 
-    private fun observerDataChangesNewEdit() {
+    private fun observerDataChangesNewEdit(user: User) {
         //val sortedNoteList = noteList.sortedBy { it.title }
-        noteActivityViewModel.getAllNotes().observe(viewLifecycleOwner){list->
+        noteActivityViewModel.getNotesForUser(userId = user.id).observe(viewLifecycleOwner){list->
             noteBinding.noData.isVisible=list.isEmpty()
             val sortedNoteList = list.sortedBy { it.date }
             rvAdapter.submitList(sortedNoteList)
         }
     }
 
-    private fun observerDataChangesLastEdit() {
+    private fun observerDataChangesLastEdit(user: User) {
         //val sortedNoteList = noteList.sortedBy { it.title }
-        noteActivityViewModel.getAllNotes().observe(viewLifecycleOwner){list->
+        noteActivityViewModel.getNotesForUser(userId = user.id).observe(viewLifecycleOwner){list->
             noteBinding.noData.isVisible=list.isEmpty()
             val sortedNoteList = list.sortedByDescending { it.date }
             rvAdapter.submitList(sortedNoteList)
@@ -485,22 +515,23 @@ val theme_switch = nav_view.menu.findItem(R.id.nav_theme_toggle).actionView as S
         val popupMenu = PopupMenu(requireContext(), view)
         popupMenu.menuInflater.inflate(R.menu.display_notes_menu, popupMenu.menu)
 
+        user=args.user
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.a_to_z -> {
-                observerDataChangesAtoZ()
+                    user?.let { observerDataChangesAtoZ(it) }
                     true
                 }
                 R.id.z_to_a -> {
-                    observerDataChangesZtoA()
+                    user?.let { observerDataChangesZtoA(it) }
                     true
                 }
                 R.id.new_edit -> {
-                    observerDataChangesNewEdit()
+                    user?.let { observerDataChangesNewEdit(it) }
                 true
                 }
                 R.id.last_edit -> {
-                    observerDataChangesLastEdit()
+                    user?.let { observerDataChangesLastEdit(it) }
                     true
                 }
                 else -> false

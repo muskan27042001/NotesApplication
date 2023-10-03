@@ -22,21 +22,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp"
-                android:padding="20dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:src="@drawable/img2" />
+                android:layout_marginTop="50dp"
+                android:paddingHorizontal="20dp">
 
                 <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="60dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/login_email"
                     android:layout_marginTop="30dp"
-                    android:padding="8dp"
+                    android:textSize="15dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
                     android:hint="Email"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
@@ -44,12 +41,14 @@
                     android:background="@drawable/edittext_bkg" />
 
                 <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="60dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/login_password"
                     android:layout_marginTop="20dp"
-                    android:padding="8dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:textSize="15dp"
                     android:hint="Password"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
@@ -59,12 +58,14 @@
 
 
                 <Button
-                    android:layout_width="300dp"
-                    android:layout_height="70dp"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:id="@+id/login_button"
                     android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="#A484D1"
                     android:text="Login"
                     app:cornerRadius="30dp" />
 

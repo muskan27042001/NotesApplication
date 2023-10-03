@@ -3,6 +3,7 @@ package com.example.notesapplication.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.notesapplication.R
 import com.example.notesapplication.databinding.FragmentLoginBinding
 import com.example.notesapplication.viewModel.NoteActivityViewModel
+import com.google.android.material.transition.MaterialElevationScale
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -24,7 +26,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enterTransition= MaterialElevationScale(true).apply {
+            duration=100
+        }
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -60,6 +64,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
                                 lifecycleScope.launch {
+                                    Log.d("ho gya login","")
                                     noteActivityViewModel.setLoggedIn(user)
                                 }
 

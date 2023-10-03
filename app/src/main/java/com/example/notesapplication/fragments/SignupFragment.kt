@@ -10,16 +10,26 @@ import com.example.notesapplication.R
 import com.example.notesapplication.databinding.FragmentSignupBinding
 import com.example.notesapplication.model.User
 import com.example.notesapplication.viewModel.NoteActivityViewModel
+import com.google.android.material.transition.MaterialElevationScale
 
 
 class SignupFragment : Fragment(R.layout.fragment_signup) {
 
     private lateinit var signupBinding: FragmentSignupBinding
     private val noteActivityViewModel: NoteActivityViewModel by activityViewModels()
+    val labellistfordb = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Trannsition on exiting this fragment
+        exitTransition= MaterialElevationScale(false).apply {
+            duration=350
+        }
 
+        // Transition on entering this fragment
+        enterTransition= MaterialElevationScale(true).apply {
+            duration=100
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +47,7 @@ class SignupFragment : Fragment(R.layout.fragment_signup) {
                     if (user == null || user.username.isEmpty()) {
                         // User doesn't exist
                         Log.d("ExistingUser", "User doesn't exist")
-                        val user = User(username = username, password = password, isLoggedIn = false)
+                        val user = User(username = username, password = password, isLoggedIn = false, labels = labellistfordb)
                         noteActivityViewModel.insertUser(user)
                         // Notify user that sign up was successful
                         Toast.makeText(requireContext(), "Sign Up Successful", Toast.LENGTH_SHORT).show()

@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.notesapplication.Converters
 import com.example.notesapplication.model.Note
 import com.example.notesapplication.model.User
 
 @Database(entities = [Note::class, User::class],
-    version = 7,
+    version = 10,
     exportSchema = false
 )
+@TypeConverters(Converters::class) // Add this line
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract fun getNoteDao(): DAO
@@ -33,7 +36,6 @@ abstract class NoteDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE note ADD COLUMN deletedTimestamp INTEGER")
             }
         }
-
         val MIGRATION_3_4: Migration = object : Migration(3,4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE note ADD COLUMN isPinned INTEGER NOT NULL DEFAULT 0")

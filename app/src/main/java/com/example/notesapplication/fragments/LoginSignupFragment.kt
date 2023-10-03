@@ -21,7 +21,10 @@ import com.example.notesapplication.databinding.FragmentNoteBinding
 import com.example.notesapplication.model.User
 import com.example.notesapplication.viewModel.NoteActivityViewModel
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.transition.MaterialElevationScale
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class LoginSignupFragment : Fragment(R.layout.fragment_login_signup) {
@@ -35,14 +38,22 @@ class LoginSignupFragment : Fragment(R.layout.fragment_login_signup) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Trannsition on exiting this fragment
+        exitTransition= MaterialElevationScale(false).apply {
+            duration=350
+        }
 
+        // Transition on entering this fragment
+        enterTransition= MaterialElevationScale(true).apply {
+            duration=100
+        }
     }
 
     @SuppressLint("MissingInflatedId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        lifecycleScope.launch {
+       // view.visibility = View.GONE
+       /* lifecycleScope.launch {
 
             val sharedPreferences = requireContext().getSharedPreferences("LOGGEDINUSERNAME", Context.MODE_PRIVATE)
             val value = sharedPreferences.getString("username", "defaultValue")
@@ -57,30 +68,34 @@ class LoginSignupFragment : Fragment(R.layout.fragment_login_signup) {
                     }
                     if(user==null)
                     {
-                        Log.d("LOGINSIGNUP","")
+                        Log.d("LOGINSIGNUP","user is null")
+
+
                     }
                 }
 
             }
-        }
+        }*/
 
 
-        lifecycleScope.launch {
+      /*  lifecycleScope.launch {
             val isLoggedIn = noteActivityViewModel.isLoggedIn()
             if (isLoggedIn) {
                 val user = noteActivityViewModel.getLoggedInUser()
                 Log.d("Logged in user ", user.toString())
                 if (user != null) {
                     // User is logged in, you can now use the 'user' object
-                    val action = LoginSignupFragmentDirections.actionLoginSignupFragmentToNoteFragment(user)
-                    findNavController().navigate(action)
+                    withContext(Dispatchers.Main) {
+                        val action = LoginSignupFragmentDirections.actionLoginSignupFragmentToNoteFragment(user)
+                        findNavController().navigate(action)
+                    }
                 } else {
                     Log.d("User in not logged in","")
+                    view.visibility = View.VISIBLE
                     // Handle case where user is somehow logged in but user object is null
                 }
             }
-        }
-
+        }*/
 
         loginSignupFragmentNoteBinding = FragmentLoginSignupBinding.bind(view)
 

@@ -47,7 +47,9 @@ class NoteActivityViewModel(private val repository: NoteRepository) : ViewModel(
     fun getAllNotes() : LiveData<List<Note>> = repository.getNote()
 
 
-    fun getDeletedNotesSince() : LiveData<List<Note>> = repository.getDeletedNotesSince()
+    fun getDeletedNotesSince(userId: Int) : LiveData<List<Note>> = repository.getDeletedNotesSince(userId)
+
+    fun getNotesOfLabel(userId: Int,labelname : String) : LiveData<List<Note>> = repository.getNotesOfLabel(userId,labelname)
 
     fun getUndeletedNotes() : LiveData<List<Note>> = repository.getUndeletedNotes()
 
@@ -94,5 +96,23 @@ class NoteActivityViewModel(private val repository: NoteRepository) : ViewModel(
     }
 
     suspend fun setLoggedIn(user : User)  = repository.setLoggedIn(user)
+
+    suspend fun updateUserLabels(user: User, labels: List<String>) = repository.updateUserLabels(user,labels)
+
+    fun getLabelsForUser(username : String) :LiveData<List<String>> = repository.getLabelsForUser(username)
+
+    suspend fun addLabelsToUser(user: User, newLabel : String) = repository.addLabelsToUser(user,newLabel)
+
+    suspend fun removeLabelFromUser(user: User,labelToRemove: String) = repository.removeLabelFromUser(user,labelToRemove)
+
+     suspend fun addLabelToNote(note : Note, selectedlabel : String) = repository.addLabelToNote(note,selectedlabel)
+
+    suspend fun getLabelOfNote(userId : Int, id : Int): String? {
+        return repository.getLabelOfNote(userId,id)
+    }
+
+    suspend fun pinnedornot(noteId : Int) : Boolean{
+        return repository.pinnedornot(noteId)
+    }
 }
 

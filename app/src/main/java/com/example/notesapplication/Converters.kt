@@ -8,14 +8,25 @@ import java.io.ByteArrayOutputStream
 class Converters {
 
     // It will convert Bitmap to ByteArray
-    @TypeConverter
+   /* @TypeConverter
     fun fromBitmap(bitmap : Bitmap) : ByteArray{
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream)
         return outputStream.toByteArray()
+    }*/
+
+   /* fun toBitmap(byteArray: ByteArray) : Bitmap{
+       return BitmapFactory.decodeByteArray(byteArray,0,byteArray.size)
+    }*/
+
+    @TypeConverter
+    fun fromString(value: String): List<String> {
+        return value.split(",")
     }
 
-    fun toBitmap(byteArray: ByteArray) : Bitmap{
-       return BitmapFactory.decodeByteArray(byteArray,0,byteArray.size)
+    @TypeConverter
+    fun fromList(list: List<String>): String {
+        return list.joinToString(",")
+
     }
 }

@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
             android:textSize="18dp"
             android:text="Notes will be deleted permanently after 7 days"
             tools:ignore="MissingConstraints"></TextView>

@@ -9,6 +9,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="40dp"
+        android:backgroundTint="@color/wow_color"
         android:id="@+id/bottomSheetParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +37,8 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_color_lens_24"
                 android:drawablePadding="10dp"
+                android:layout_marginStart="10dp"
+                android:paddingVertical="20dp"
                 android:text="@string/choose_color"
                 android:id="@+id/addColor"
                 android:textSize="20sp"
@@ -48,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
                 android:id="@+id/horizontalbar"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addColor">
@@ -72,6 +78,7 @@
                 android:drawableStart="@drawable/ic_baseline_color_lens_24"
                 android:drawablePadding="10dp"
                 android:text="Choose Background"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:id="@+id/addBackground"
                 android:textSize="20sp"
@@ -86,6 +93,8 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
                 android:layout_marginTop="10dp"
+                android:paddingVertical="20dp"
+                android:layout_marginEnd="10dp"
                 android:id="@+id/horizontalbarbackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,40 +105,44 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:id="@+id/floral_bg_img"
-                        android:src="@drawable/floral_bg" />
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/flower_circle" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="10dp"
                         android:id="@+id/love_bg_img"
-                        android:src="@drawable/love_bg" />
-                    <ImageView
+                        android:src="@drawable/leaf_circle" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/food_circle" />
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/floral_bg" />
-                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/dog" />
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/floral_bg" />
-                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/beach" />
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/floral_bg" />
-                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/white" />
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/floral_bg" />
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/floral_bg" />
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:src="@drawable/floral_bg" />
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/building" />
+
                 </LinearLayout>
 
             </HorizontalScrollView>

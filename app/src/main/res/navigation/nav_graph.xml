@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginSignupFragment">
+    app:startDestination="@id/splashScreenFragment">
     <fragment
         android:id="@+id/noteFragment"
         android:name="com.example.notesapplication.fragments.NoteFragment"
@@ -44,6 +44,15 @@
             app:nullable="true"
             app:argType="com.example.notesapplication.model.User"/>
 
+        <action
+            android:id="@+id/action_noteFragment_to_labelFragment"
+            app:destination="@id/labelFragment">
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"
+                app:nullable="true" />
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/saveOrUpdateFragment"
@@ -70,6 +79,13 @@
             android:defaultValue="@null"
             app:nullable="true"
             app:argType="com.example.notesapplication.model.User"/>
+        <action
+            android:id="@+id/action_saveOrUpdateFragment_to_addLabelFragment"
+            app:destination="@id/addLabelFragment">
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/deletedNoteFragment"
@@ -117,4 +133,90 @@
 
 
     </fragment>
+    <fragment
+        android:id="@+id/labelFragment"
+        android:name="com.example.notesapplication.fragments.LabelFragment"
+        android:label="LabelFragment" >
+        <action
+            android:id="@+id/action_labelFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
+
+
+        <action
+            android:id="@+id/action_labelFragment_to_allNotesOfSpecificLabelFragment"
+            app:destination="@id/allNotesOSpecificLabelFragment" >
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"/>
+            <argument
+                android:name="LabelName"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addLabelFragment"
+        android:name="com.example.notesapplication.fragments.AddLabelFragment"
+        android:label="AddLabelFragment" >
+
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
+        <argument
+            android:name="Note"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.Note"/>
+        <action
+            android:id="@+id/action_addLabelFragment_to_saveOrUpdateFragment"
+            app:destination="@id/saveOrUpdateFragment">
+            <argument
+                android:name="Note"
+                app:argType="com.example.notesapplication.model.Note"/>>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.example.notesapplication.fragments.SplashScreenFragment"
+        android:label="SplashScreenFragment" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_loginSignupFragment"
+            app:destination="@id/loginSignupFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_noteFragment"
+            app:destination="@id/noteFragment">
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/allNotesOSpecificLabelFragment"
+        android:name="com.example.notesapplication.fragments.AllNotesOfSpecificLabelFragment"
+        android:label="AllNotesOSpecificLabelFragment" >
+        <action
+            android:id="@+id/action_allNotesOSpecificLabelFragment_to_labelFragment"
+            app:destination="@id/labelFragment" >
+
+        </action>
+
+
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
+
+        <argument
+            android:name="LabelName"
+            app:argType="string"/>
+    </fragment>
+
 </navigation>
