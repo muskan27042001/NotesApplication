@@ -2,7 +2,7 @@
 ![1](https://github.com/muskan27042001/NotesApplication/assets/72308746/096cd98f-2ee6-46dd-b5ee-161d0425d00d)
 ![2](https://github.com/muskan27042001/NotesApplication/assets/72308746/346e6ad5-1cd5-4997-b89a-3bdc714bd7d0)
 
-Install the App'https://github.com/muskan27042001/NotesApplication/releases/tag/NoteIt'
+Install the App 'https://github.com/muskan27042001/NotesApplication/releases/tag/NoteIt'
 
 > A powerful Android notes-taking app with feature-rich capabilities for efficient organization and productivity.
 
