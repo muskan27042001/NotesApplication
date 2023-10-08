@@ -14,6 +14,15 @@
 - **Share Note**: Export and share your notes as PDF.
 - **Dark Mode**: Comfortable note-taking even in low light environments.
 
+## Technologies Used
+
+- **Kotlin**: The entire app is written in Kotlin, making it concise, expressive, and interoperable with existing Android code.
+- **Room Database**: Utilizes Room to provide robust and efficient local data storage, ensuring seamless data management.
+- **Jetpack Compose**: Modern UI toolkit for building native Android apps.
+- **Coroutine**: For asynchronous and non-blocking programming.
+- **ViewModel**: Implements ViewModel architecture component to efficiently manage UI-related data and handle lifecycle changes.
+- **Data Binding**: Leverages Data Binding library to bind UI components in your layouts directly to data sources, making code more modular and efficient.
+
 ## Installation
 
 1. Clone the repository `git clone https://github.com/yourusername/yourapp.git`
