@@ -8,23 +8,30 @@
         tool:showAsAction="always"
         android:icon="@drawable/baseline_add_photo_alternate_24"
         android:title="A to Z" />
+    </group>
+
+    <group>
     <item
         android:id="@+id/z_to_a"
         tool:showAsAction="always"
         android:icon="@drawable/baseline_share_24"
         android:title="Zto A" />
+    </group>
+
+    <group>
     <item
         android:id="@+id/new_edit"
         tool:showAsAction="always"
         android:icon="@drawable/baseline_share_24"
         android:title="New Edited" />
+    </group>
+
+    <group>
     <item
         android:id="@+id/last_edit"
         tool:showAsAction="always"
         android:icon="@drawable/baseline_share_24"
         android:title="Last Edited" >
-
     </item>
-
-</group>
+    </group>
 </menu>

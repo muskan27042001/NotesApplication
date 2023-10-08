@@ -10,15 +10,14 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/BackgroundColor"
         tools:context=".fragments.NoteFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:liftOnScroll="true"
+            android:background="@color/LayoutBackground"
             android:layout_marginTop="15dp"
-            style="@style/BackgroundColor"
             android:id="@+id/app_bar_layout">
 
             <androidx.appcompat.widget.Toolbar
@@ -47,7 +46,8 @@
                             android:id="@+id/nav_image"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/baseline_menu_24">
+                            android:src="@drawable/baseline_menu_24"
+                            app:tint="@color/Vector">
 
                         </ImageView>
 
@@ -76,8 +76,9 @@
                             android:src="@drawable/baseline_more_vert_24"
                             android:id="@+id/menu_display_note"
                             android:layout_weight="1"
+                            app:tint="@color/Vector"
                             android:layout_gravity="center_vertical"
-                            app:tint="@color/black" />
+                            />
 
                     </LinearLayout>
 

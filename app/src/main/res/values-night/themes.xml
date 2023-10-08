@@ -17,23 +17,4 @@
     </style>
 
 
-    <style name="FloatingButton">
-        <item name="android:backgroundTint">@color/card_purple</item>
-    </style>
-    <style name="BackgroundColor">
-        <item name="android:background">#504E4E</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-    <style name="IconColor">
-        <item name="android:color">@color/white</item>
-    </style>
-
-    <style name="Text">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="FloatingButtonTextColor">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
 </resources>

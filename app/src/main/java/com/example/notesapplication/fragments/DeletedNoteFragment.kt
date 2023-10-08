@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notesapplication.R
@@ -17,7 +19,11 @@ import com.example.notesapplication.adapter.RvNotesAdapter
 import com.example.notesapplication.databinding.FragmentDeletedNoteBinding
 import com.example.notesapplication.databinding.FragmentNoteBinding
 import com.example.notesapplication.model.User
+import com.example.notesapplication.utils.SwipeToDelete
+import com.example.notesapplication.utils.hideKeyboard
 import com.example.notesapplication.viewModel.NoteActivityViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialElevationScale
 import java.util.concurrent.TimeUnit
 
@@ -49,6 +55,7 @@ class DeletedNoteFragment : Fragment(R.layout.fragment_deleted_note) {
 
         user=userargs.user
         user?.let { recyclerViewDisplay(it) }
+        swipeToDelete(deletedNoteBinding.rvNote)
 
     }
 
@@ -107,6 +114,10 @@ class DeletedNoteFragment : Fragment(R.layout.fragment_deleted_note) {
                     }
                     rvAdapter.submitList(deletedNotes)
                 }
+                else
+                {
+                    deletedNoteBinding.noData.visibility=View.VISIBLE
+                }
 
             }
     }
@@ -119,5 +130,44 @@ class DeletedNoteFragment : Fragment(R.layout.fragment_deleted_note) {
 
     // 7 * 24 * 60 * 60 * 1000
 
+    private fun swipeToDelete(rvNote: RecyclerView) {
+        val swipeToDeleteCallback=object : SwipeToDelete()
+        {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position=viewHolder.absoluteAdapterPosition
+                val note=rvAdapter.currentList[position]
+                var actionBtnTapped=false
+
+                // Keep a reference to the deleted note
+                val deletedNote = note
+                Log.d("Restored note",deletedNote.toString())
+                deletedNote.deletedTimestamp=0
+                Log.d("Restored note after",deletedNote.toString())
+              //  noteActivityViewModel.saveNote(deletedNote)
+noteActivityViewModel.updateNote(deletedNote)
+                val snackbar = Snackbar.make(
+                    requireView(),"Note Restored", Snackbar.LENGTH_LONG
+                ).addCallback(object: BaseTransientBottomBar.BaseCallback<Snackbar>(){
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                    }
+
+                }).apply {
+                    animationMode= Snackbar.ANIMATION_MODE_FADE
+
+                }
+                snackbar.setActionTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.yellowOrange
+                    )
+                )
+                snackbar.show()
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(rvNote)
+    }
 
 }

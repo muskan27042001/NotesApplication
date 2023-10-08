@@ -52,6 +52,9 @@ interface DAO {
     @Query("SELECT * FROM Note WHERE userId = :userId AND deletedTimestamp = 0 ORDER BY isPinned DESC , id DESC")
     fun getNotesForUser(userId: Int): LiveData<List<Note>>
 
+    @Query("SELECT * FROM Note WHERE userId = :userId AND isPinned = 1 ORDER BY id DESC")
+    fun getAllPinnedNotesForUser(userId: Int): LiveData<List<Note>>
+
     @Query("SELECT labels FROM users WHERE username = :username")
     fun getLabelsForUser(username: String) : LiveData<List<String>>
 
@@ -84,6 +87,6 @@ interface DAO {
     suspend fun getLabelOfNote(noteId: Int, userId: Int): String?
 
     @Query("SELECT isPinned FROM Note where id=:noteId")
-    suspend fun pinnedornot(noteId: Int) : Boolean
+    suspend fun pinnedornot(noteId: Int) : Int
 
 }

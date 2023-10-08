@@ -39,6 +39,8 @@ class NoteRepository(private val db : NoteDatabase) {
 
     fun getNotesForUser(userId : Int) = db.getNoteDao().getNotesForUser(userId)
 
+    fun getAllPinnedNotesForUser(userId : Int) = db.getNoteDao().getAllPinnedNotesForUser(userId)
+
     fun getLabelsForUser(username: String) = db.getNoteDao().getLabelsForUser(username)
 
     suspend fun isLoggedIn(): Boolean {
@@ -80,6 +82,11 @@ class NoteRepository(private val db : NoteDatabase) {
         db.getNoteDao().updateUser(user) // Update the user in the database
     }
 
+    suspend fun removeLabelFromNote(user: User,note: Note) {
+        note.label = null
+        db.getNoteDao().updateNote(note) // Update the user in the database
+    }
+
     fun getUserById(userId: Int): LiveData<User> {
         return db.getNoteDao().getUserById(userId)
     }
@@ -88,7 +95,7 @@ class NoteRepository(private val db : NoteDatabase) {
         return db.getNoteDao().getLabelOfNote(userId,id)
     }
 
-    suspend fun pinnedornot(noteId : Int) : Boolean{
+    suspend fun pinnedornot(noteId : Int) : Int{
         return db.getNoteDao().pinnedornot(noteId)
     }
 

@@ -83,6 +83,8 @@ class NoteActivityViewModel(private val repository: NoteRepository) : ViewModel(
 
     fun getNotesForUser(userId : Int) :LiveData<List<Note>> = repository.getNotesForUser(userId)
 
+    fun getAllPinnedNotesForUser(userId: Int) : LiveData<List<Note>> = repository.getAllPinnedNotesForUser(userId)
+
     fun clearUserData() {
         _userLiveData.value = null
     }
@@ -105,13 +107,15 @@ class NoteActivityViewModel(private val repository: NoteRepository) : ViewModel(
 
     suspend fun removeLabelFromUser(user: User,labelToRemove: String) = repository.removeLabelFromUser(user,labelToRemove)
 
+    suspend fun removeeLabelFromNote(user: User,note: Note) = repository.removeLabelFromNote(user,note)
+
      suspend fun addLabelToNote(note : Note, selectedlabel : String) = repository.addLabelToNote(note,selectedlabel)
 
     suspend fun getLabelOfNote(userId : Int, id : Int): String? {
         return repository.getLabelOfNote(userId,id)
     }
 
-    suspend fun pinnedornot(noteId : Int) : Boolean{
+    suspend fun pinnedornot(noteId : Int) : Int{
         return repository.pinnedornot(noteId)
     }
 }

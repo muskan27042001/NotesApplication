@@ -15,6 +15,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
@@ -86,18 +87,20 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
         requireView().hideKeyboard()
 
         ////////////////////////////////////
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (backPressedTime + 1000 > System.currentTimeMillis()) {
-                    activity?.finishAffinity()
-                } else {
-                    // Show a toast or perform any other action you want
-                }
-                backPressedTime = System.currentTimeMillis()
+      /*  requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                activity?.finishAffinity()
+            } else {
+                // Show a toast or perform any other action you want
             }
+            backPressedTime = System.currentTimeMillis()
+        }
+*/
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         ///////////////////////////////////
      //   user = arguments?.getParcelable("User")
 
@@ -159,6 +162,12 @@ class NoteFragment : Fragment(R.layout.fragment_note) {
 
                 }
 
+                R.id.pinned_notes->{
+
+                    user?.let {
+                        navController.navigate(NoteFragmentDirections.actionNoteFragmentToPinnedNotes(it))
+                    }
+                }
                 R.id.deleted_notes->{
                     Log.d("CLICKED","itemi 1")
                     navController.navigate(NoteFragmentDirections.actionNoteFragmentToDeletedNoteFragment(user))
@@ -233,10 +242,11 @@ val theme_switch = nav_view.menu.findItem(R.id.nav_theme_toggle).actionView as S
         Log.d("MODE", nightMode.toString())
 
         if (nightMode == true) {
-                theme_switch.isChecked
+                theme_switch.isChecked=true
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
         if (nightMode == false) {
+            theme_switch.isChecked=false
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 

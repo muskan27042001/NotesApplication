@@ -7,34 +7,22 @@
             android:id="@+id/home_group">
                 <item
                     android:id="@+id/home_fragment"
-                    android:icon="@drawable/ic_link"
+                    android:icon="@drawable/baseline_notes_24"
                     app:showAsAction="always"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:title="Notes" />
         </group>
 
-
         <group
-            android:id="@+id/deletednotes_group">
+            android:id="@+id/pinnednotes_group">
                 <item
-                    android:id="@+id/deleted_notes"
-                    android:icon="@drawable/ic_delete"
+                    android:id="@+id/pinned_notes"
+                    android:icon="@drawable/baseline_favorite_24"
                     app:showAsAction="always"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:title="Deleted Notes" />
-        </group>
-
-        <group
-            android:id="@+id/logout_group">
-                <item
-                    android:id="@+id/logout_acount"
-                    android:icon="@drawable/baseline_logout_24"
-                    app:showAsAction="always"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:title="Logout" />
+                    android:title="Pinned Notes" />
         </group>
 
         <group
@@ -49,6 +37,39 @@
         </group>
 
         <group
+            android:id="@+id/deletednotes_group">
+                <item
+                    android:id="@+id/deleted_notes"
+                    android:icon="@drawable/ic_delete"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Deleted Notes" />
+        </group>
+
+        <group
+            android:id="@+id/theme_group">
+                <item
+                    android:id="@+id/nav_theme_toggle"
+                    android:actionLayout="@layout/theme_switch"
+                    app:showAsAction="always"
+                    app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
+                    android:title="           Theme" />
+        </group>
+        <group
+            android:id="@+id/logout_group">
+                <item
+                    android:id="@+id/logout_acount"
+                    android:icon="@drawable/baseline_logout_24"
+                    app:showAsAction="always"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:title="Logout" />
+        </group>
+
+
+
+        <group
             android:id="@+id/deleteaccount_group">
                 <item
                     android:id="@+id/delete_account"
@@ -59,16 +80,4 @@
                     android:title="Delete Account"/>
         </group>
 
-
-        <group
-            android:id="@+id/theme_group">
-                <item
-                    android:id="@+id/nav_theme_toggle"
-                    android:actionLayout="@layout/theme_switch"
-                    app:showAsAction="always"
-                    app:actionViewClass="androidx.appcompat.widget.SwitchCompat"
-                    android:title="                          Theme" />
-        </group>
-
-        <!-- Add more items as needed -->
 </menu>

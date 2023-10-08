@@ -32,13 +32,14 @@
                     android:id="@+id/login_email"
                     android:layout_marginTop="30dp"
                     android:textSize="15dp"
+                    android:inputType="textEmailAddress"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="12dp"
                     android:hint="Email"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:drawablePadding="8dp"
-                    android:background="@drawable/edittext_bkg" />
+                    android:background="@drawable/edittextloginsignup" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -54,7 +55,7 @@
                     android:textColorHint="@color/black"
                     android:inputType="textPassword"
                     android:drawablePadding="8dp"
-                    android:background="@drawable/edittext_bkg" />
+                    android:background="@drawable/edittextloginsignup" />
 
 
                 <Button

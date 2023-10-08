@@ -52,6 +52,13 @@
                 app:argType="com.example.notesapplication.model.User"
                 app:nullable="true" />
         </action>
+        <action
+            android:id="@+id/action_noteFragment_to_pinnedNotes"
+            app:destination="@id/pinnedNotes">
+            <argument
+                android:name="User"
+                app:argType="com.example.notesapplication.model.User"/>
+        </action>
 
     </fragment>
     <fragment
@@ -85,6 +92,10 @@
             <argument
                 android:name="User"
                 app:argType="com.example.notesapplication.model.User"/>
+            <argument
+                android:name="Note"
+                app:nullable="true"
+                app:argType="com.example.notesapplication.model.Note"/>
         </action>
     </fragment>
     <fragment
@@ -179,7 +190,11 @@
             app:destination="@id/saveOrUpdateFragment">
             <argument
                 android:name="Note"
-                app:argType="com.example.notesapplication.model.Note"/>>
+                app:argType="com.example.notesapplication.model.Note"/>
+            <argument
+                android:name="User"
+                app:nullable="true"
+                app:argType="com.example.notesapplication.model.User"/>
         </action>
     </fragment>
     <fragment
@@ -196,6 +211,9 @@
                 android:name="User"
                 app:argType="com.example.notesapplication.model.User"/>
         </action>
+        <action
+            android:id="@+id/action_splashScreenFragment_to_permissionFragment"
+            app:destination="@id/permissionFragment" />
     </fragment>
     <fragment
         android:id="@+id/allNotesOSpecificLabelFragment"
@@ -217,6 +235,28 @@
         <argument
             android:name="LabelName"
             app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/permissionFragment"
+        android:name="com.example.notesapplication.fragments.PermissionFragment"
+        android:label="PermissionFragment" >
+        <action
+            android:id="@+id/action_permissionFragment_to_loginSignupFragment"
+            app:destination="@id/loginSignupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pinnedNotes"
+        android:name="com.example.notesapplication.fragments.PinnedNotes"
+        android:label="PinnedNotes" >
+        <action
+            android:id="@+id/action_pinnedNotes_to_noteFragment"
+            app:destination="@id/noteFragment" />
+
+        <argument
+            android:name="User"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.notesapplication.model.User"/>
     </fragment>
 
 </navigation>

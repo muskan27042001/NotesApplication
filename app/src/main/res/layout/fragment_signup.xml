@@ -39,7 +39,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:drawablePadding="8dp"
-                    android:background="@drawable/edittext_bkg" />
+                    android:background="@drawable/edittextloginsignup" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:drawablePadding="8dp"
-                    android:background="@drawable/edittext_bkg" />
+                    android:background="@drawable/edittextloginsignup" />
 
 
                 <Button

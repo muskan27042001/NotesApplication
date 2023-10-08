@@ -17,36 +17,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="15dp"
+            android:background="@null"
             android:paddingVertical="10dp"
             android:paddingEnd="15dp"
-            style="@style/BackgroundColor"
             android:id="@+id/toolbarFragmentNoteContent">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_centerVertical="true"
                 android:id="@+id/backButton"
-                android:src="@drawable/ic_round_arrow_back_24">
+                android:src="@drawable/ic_round_arrow_back_24"
+                app:tint="@color/Vector">
 
             </ImageView>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lastEdited"
-                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@drawable/date_rounded"
                 android:ellipsize="end"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:text="Edited on"
                 android:textAlignment="center"
-                android:textSize="16sp"
-                android:textStyle="bold">
+                android:textColor="@color/Title"
+                android:textSize="15sp">
 
             </com.google.android.material.textview.MaterialTextView>
 
@@ -56,10 +54,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/baseline_check_24">
+                android:src="@drawable/baseline_check_24"
+                app:tint="@color/Vector">
 
             </ImageView>
 
@@ -87,7 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="10dp"
                     android:id="@+id/optionsLayout"
                     android:orientation="horizontal">
 
@@ -95,14 +94,18 @@
                         android:id="@+id/pin_note"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/baseline_favorite_border_24" />
+                        android:focusable="true"
+                        android:src="@drawable/baseline_favorite_border_24"
+                        app:tint="@color/Vector" />
 
                     <ImageView
                         android:id="@+id/add_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
-                        android:src="@drawable/baseline_add_a_photo_24" />
+                        android:focusable="true"
+                        android:src="@drawable/baseline_add_a_photo_24"
+                        app:tint="@color/Vector" />
 
                     <ImageView
                         android:id="@+id/add_link"
@@ -117,15 +120,19 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="30dp"
+                        android:focusable="true"
                         android:visibility="visible"
-                        android:src="@drawable/baseline_new_label_24" />
+                        android:src="@drawable/baseline_new_label_24"
+                        app:tint="@color/Vector" />
 
                     <ImageView
                         android:id="@+id/send_note"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="30dp"
-                        android:src="@drawable/baseline_share_24" />
+                        android:focusable="true"
+                        android:src="@drawable/baseline_share_24"
+                        app:tint="@color/Vector" />
 
                 </LinearLayout>
 
@@ -133,44 +140,68 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
-                    android:layout_marginTop="10dp"
                     android:id="@+id/titleLayout"
                     android:orientation="horizontal">
 
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="8dp"
                         android:background="@null"
+                        android:textColor="@color/Title"
                         android:layout_weight="9"
                         android:id="@+id/etTitle"
                         android:inputType="none"
+                        android:layout_marginTop="5dp"
                         android:textSize="22sp"
                         android:importantForAutofill="no"
                         android:hint="Note Title">
 
                     </EditText>
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/baseline_label_24"
-                        android:id="@+id/label_img"
-                        android:background="@null"
-                        android:visibility="gone"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        app:tint="@color/black" />
+                        android:orientation="horizontal"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="5dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp">
 
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:text="label"
-                        android:id="@+id/label_text"
-                        android:visibility="gone"
-                        android:paddingStart="5dp"
-                        android:textSize="20sp"
-                        />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_label_24"
+                            android:id="@+id/label_img"
+                            android:background="@null"
+                            android:visibility="gone"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            app:tint="@color/Vector" />
+
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="label"
+                            android:textColor="@color/Title"
+                            android:id="@+id/label_text"
+                            android:visibility="gone"
+                            android:paddingStart="5dp"
+                            android:textSize="20sp"
+                            />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_clear_24"
+                            android:id="@+id/label_clear_img"
+                            android:background="@null"
+                            android:visibility="gone"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            app:tint="@color/Vector" />
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -192,6 +223,7 @@
                         android:layout_marginEnd="20dp"
                         android:hint="Note"
                         android:autoLink="web"
+                        android:textColor="@color/NoteContent"
                         android:linksClickable="true"
                         android:background="@null"
                         android:layout_marginStart="20dp"
@@ -294,6 +326,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bottomBar"
+            android:background="@null"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:paddingBottom="10dp"

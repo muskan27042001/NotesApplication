@@ -8,39 +8,38 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="190dp"
         android:layout_marginTop="20dp"
-        app:cardCornerRadius="40dp"
-        android:backgroundTint="@color/wow_color"
         android:id="@+id/bottomSheetParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomSheetContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/bottomSheetContainer">
+            android:layout_height="319dp">
 
             <ImageView
+                android:id="@+id/bar"
                 android:layout_width="40dp"
                 android:layout_height="6dp"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/bar"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/shape_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/shape_image"></ImageView>
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/addColor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:drawableStart="@drawable/ic_baseline_color_lens_24"
                 android:drawablePadding="10dp"
-                android:layout_marginStart="10dp"
                 android:paddingVertical="20dp"
+                app:drawableTint="@color/Vector"
+                android:textColor="@color/Title"
                 android:text="@string/choose_color"
-                android:id="@+id/addColor"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,19 +48,19 @@
             </com.google.android.material.textview.MaterialTextView>
 
             <HorizontalScrollView
+                android:id="@+id/horizontalbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:id="@+id/horizontalbar"
                 android:layout_marginEnd="10dp"
+                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addColor">
 
                 <com.thebluealliance.spectrum.SpectrumPalette
+                    android:id="@+id/colorPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/colorPicker"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     app:spectrum_autoPadding="true"
@@ -72,15 +71,18 @@
                 </com.thebluealliance.spectrum.SpectrumPalette>
             </HorizontalScrollView>
 
+
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/addBackground"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:drawableStart="@drawable/ic_baseline_color_lens_24"
                 android:drawablePadding="10dp"
                 android:text="Choose Background"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:id="@+id/addBackground"
+                android:visibility="gone"
+                app:drawableTint="@color/Vector"
+                android:textColor="@color/Title"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,13 +91,13 @@
             </com.google.android.material.textview.MaterialTextView>
 
             <HorizontalScrollView
+                android:id="@+id/horizontalbarbackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_marginTop="10dp"
-                android:paddingVertical="20dp"
                 android:layout_marginEnd="10dp"
-                android:id="@+id/horizontalbarbackground"
+                android:paddingVertical="20dp"
+                android:scrollbars="none"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addBackground">
@@ -105,42 +107,54 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/floral_bg_img"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:id="@+id/floral_bg_img"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/flower_circle" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/leaf_bg_img"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="10dp"
-                        android:id="@+id/love_bg_img"
                         android:src="@drawable/leaf_circle" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/food_bg_img"
                         android:src="@drawable/food_circle" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:id="@+id/dog_bg_img"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/dog" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:id="@+id/beach_bg_img"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/beach" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:id="@+id/white_bg_img"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/white" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_marginLeft="10dp"
+                        android:id="@+id/building_bg_img"
                         android:src="@drawable/building" />
 
                 </LinearLayout>
@@ -150,46 +164,45 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/horizontalbarbackground"
-android:visibility="gone"
+                android:layout_margin="10dp"
                 android:background="@color/white"
                 android:gravity="center"
-                android:layout_margin="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalbarbackground">
 
                 <LinearLayout
                     android:id="@+id/layoutImage"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="10dp"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_image"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_image"
                         app:tint="@color/black" />
 
                     <TextView
+                        android:id="@+id/add_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Add Image"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        android:id="@+id/add_image"
-                        android:text="Add Image"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </LinearLayout>
 
@@ -198,36 +211,35 @@ android:visibility="gone"
                     android:id="@+id/layoutWebUrl"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@color/white"
-                    android:gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_link"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_link"
                         app:tint="@color/black" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Add Web Link"
                         android:textColor="@color/black"
                         android:textSize="10sp"
-                        android:text="Add Web Link"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </LinearLayout>
 
