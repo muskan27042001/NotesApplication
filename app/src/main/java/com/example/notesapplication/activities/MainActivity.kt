@@ -111,14 +111,14 @@ Log.d("1.1","")
                    {
                        Log.d("6","")
                        if((ContextCompat.checkSelfPermission(this@MainActivity,Manifest.permission.READ_EXTERNAL_STORAGE)===PackageManager.PERMISSION_GRANTED)){
-                           Toast.makeText(this,"granted",Toast.LENGTH_SHORT).show()
+                         //  Toast.makeText(this,"granted",Toast.LENGTH_SHORT).show()
 
                        }
 
                    }
                    else{
                        Log.d("7","")
-                       Toast.makeText(this,"denied",Toast.LENGTH_SHORT).show()
+                     //  Toast.makeText(this,"denied",Toast.LENGTH_SHORT).show()
                    }
 
                    return

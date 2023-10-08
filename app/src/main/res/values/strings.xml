@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NotesApplication</string>
+    <string name="app_name">NoteIt</string>
 
     <string name="storage_permission_text">This app needs access to your storage.</string>
     <string name="my_notes">My Notes</string>
