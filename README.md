@@ -9,10 +9,12 @@
 - **Note Creation**: Easily create, edit, and delete notes.
 - **Rich Text Formatting**: Style your notes with bold, italics, underline, and more.
 - **Image Attachments**: Add images directly into your notes.
-- **Labels**: Organize your notes with customizable labels.
+- **Labels**: Organize your notes with customizable labels and easily find all the notes with specific label.
 - **Search and Filter**: Quickly find notes using note title.
 - **Share Note**: Export and share your notes as PDF.
 - **Dark Mode**: Comfortable note-taking even in low light environments.
+- **Pin Notes**: Notes can be pinned for easy access.
+- **Deleted Notes**: Deleted notes can be restored and will delete permanently after 7 days.
 
 ## Technologies Used
 
